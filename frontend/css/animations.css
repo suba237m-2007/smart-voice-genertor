@@ -1,0 +1,54 @@
+/* ==========================================================================
+   Smart Voice Generator - animations (kept subtle and lightweight)
+   ========================================================================== */
+
+@keyframes page-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes wave { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
+@keyframes toast-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes toast-out { from { opacity: 1; } to { opacity: 0; transform: translateX(24px); } }
+@keyframes shimmer { 0% { opacity: 0.55; } 50% { opacity: 1; } 100% { opacity: 0.55; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* Page transition: the content fades in once when a page opens. */
+main { animation: page-in 0.3s ease both; }
+
+/* Card entrance: cards rise in once, staggered slightly. */
+.card, .summary-strip { animation: rise-in 0.4s ease both; }
+.workspace-main > .card:nth-child(2) { animation-delay: 0.08s; }
+.workspace-side > .card:nth-child(1) { animation-delay: 0.05s; }
+.workspace-side > .card:nth-child(2) { animation-delay: 0.12s; }
+.history-list .card:nth-child(2) { animation-delay: 0.05s; }
+.history-list .card:nth-child(3) { animation-delay: 0.1s; }
+.about-grid .card:nth-child(2) { animation-delay: 0.05s; }
+.about-grid .card:nth-child(3) { animation-delay: 0.1s; }
+
+/* Speaking indicator and sound wave. */
+.wave i { animation: wave 1s ease-in-out infinite; animation-play-state: paused; }
+.wave i:nth-child(1) { animation-delay: 0s; }
+.wave i:nth-child(2) { animation-delay: 0.15s; }
+.wave i:nth-child(3) { animation-delay: 0.3s; }
+.wave i:nth-child(4) { animation-delay: 0.45s; }
+.wave i:nth-child(5) { animation-delay: 0.6s; }
+.status[data-state="speaking"] .wave i { animation-play-state: running; }
+
+/* Toasts and dialogs. */
+.toast { animation: toast-in 0.25s ease both; }
+.toast.is-leaving { animation: toast-out 0.2s ease both; }
+dialog.dialog[open] { animation: dialog-in 0.2s ease both; }
+
+/* Loading placeholders. */
+.skeleton { animation: shimmer 1.4s ease-in-out infinite; }
+
+/* Respect the system "reduce motion" setting. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .wave i { animation: none; }
+  .status[data-state="speaking"] .wave i { transform: scaleY(0.8); }
+  .status[data-state="speaking"] .wave i:nth-child(odd) { transform: scaleY(0.45); }
+}

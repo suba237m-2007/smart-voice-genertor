@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%231d6b74%27/%3E%3Cpath d=%27M8 13v6M12.5 9v14M17 12v8M21.5 7v18M26 14v4%27 stroke=%27white%27 stroke-width=%272.2%27 stroke-linecap=%27round%27 fill=%27none%27/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <script src="/js/main.js"></script>
+  <title>History - Smart Voice Generator</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Smart Voice Generator home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect class="mark-bg" width="32" height="32" rx="8"></rect>
+          <path class="mark-bars" d="M8 13v6M12.5 9v14M17 12v8M21.5 7v18M26 14v4"></path>
+        </svg>
+        <span class="brand-name">Smart Voice Generator</span>
+      </a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+      <nav id="siteNav" class="site-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/">Home</a></li>
+          <li><a class="nav-link" href="/history" aria-current="page">History</a></li>
+          <li><a class="nav-link" href="/about">About</a></li>
+          <li><button type="button" class="nav-link nav-button" data-open-settings>Settings</button></li>
+        </ul>
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button type="button" data-theme-set="light" aria-pressed="false">&#9728; Light</button>
+          <button type="button" data-theme-set="dark" aria-pressed="false">&#127769; Dark</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-head">
+      <div class="container page-head-inner">
+        <div>
+          <h1>Speech history</h1>
+          <p class="page-sub" id="historyCount" role="status">Loading history...</p>
+        </div>
+        <button type="button" class="btn btn-danger" id="clearHistoryBtn" disabled>Clear History</button>
+      </div>
+    </section>
+    <section class="container" aria-label="Previous speech requests">
+      <div id="historyList" class="history-list" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>Smart Voice Generator is a Text and Speech Analysis subject project. Speech is produced by your browser, so voices differ between devices.</p>
+    </div>
+  </footer>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script src="/js/history.js"></script>
+</body>
+</html>

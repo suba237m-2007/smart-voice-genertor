@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%231d6b74%27/%3E%3Cpath d=%27M8 13v6M12.5 9v14M17 12v8M21.5 7v18M26 14v4%27 stroke=%27white%27 stroke-width=%272.2%27 stroke-linecap=%27round%27 fill=%27none%27/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <script src="/js/main.js"></script>
+  <title>Smart Voice Generator - Text to Speech</title>
+  <meta name="description" content="Type, analyze, customize, and listen to your text with a smart text-to-speech system.">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Smart Voice Generator home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect class="mark-bg" width="32" height="32" rx="8"></rect>
+          <path class="mark-bars" d="M8 13v6M12.5 9v14M17 12v8M21.5 7v18M26 14v4"></path>
+        </svg>
+        <span class="brand-name">Smart Voice Generator</span>
+      </a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+      <nav id="siteNav" class="site-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/" aria-current="page">Home</a></li>
+          <li><a class="nav-link" href="/history">History</a></li>
+          <li><a class="nav-link" href="/about">About</a></li>
+          <li><button type="button" class="nav-link nav-button" data-open-settings>Settings</button></li>
+        </ul>
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button type="button" data-theme-set="light" aria-pressed="false">&#9728; Light</button>
+          <button type="button" data-theme-set="dark" aria-pressed="false">&#127769; Dark</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="container">
+        <h1 id="heroTitle">Turn Your Text Into Natural Speech</h1>
+        <p class="hero-sub">Type, analyze, customize, and listen to your text with our smart text-to-speech system.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="#editor" id="startBtn">Start Speaking</a>
+          <a class="btn btn-secondary btn-lg" href="/about">How it works</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" aria-labelledby="summaryTitle">
+      <h2 id="summaryTitle" class="sr-only">Activity summary</h2>
+      <div class="summary-strip" id="summaryRegion">
+        <div class="summary-item">
+          <span class="summary-label">Total speech requests</span>
+          <span class="summary-value" id="sumRequests">&ndash;</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Total words processed</span>
+          <span class="summary-value" id="sumWords">&ndash;</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Most used language</span>
+          <span class="summary-value summary-value-text" id="sumLanguage">&ndash;</span>
+        </div>
+        <div class="summary-item">
+          <span class="summary-label">Recent activity</span>
+          <span class="summary-value summary-value-text" id="sumRecent">&ndash;</span>
+        </div>
+      </div>
+      <p class="field-error" id="summaryNote" role="status" hidden></p>
+    </section>
+
+    <div class="container workspace">
+      <div class="workspace-main">
+        <section class="card editor-card" id="editor" aria-labelledby="editorTitle">
+          <div class="card-head">
+            <h2 id="editorTitle">Your text</h2>
+            <div class="tool-row">
+              <button type="button" class="btn btn-ghost btn-sm" id="pasteBtn">Paste</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="copyBtn">Copy</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="clearBtn">Clear</button>
+            </div>
+          </div>
+          <label for="textInput" class="sr-only">Text to convert to speech</label>
+          <textarea id="textInput" maxlength="5000" rows="10" placeholder="Type or paste your text here..." aria-describedby="inputError counterLine"></textarea>
+          <p class="field-error" id="inputError" role="alert" hidden></p>
+          <p class="counter-line" id="counterLine">
+            <span>Characters: <strong id="liveChars">0</strong></span>
+            <span>Words: <strong id="liveWords">0</strong></span>
+            <span>Sentences: <strong id="liveSentences">0</strong></span>
+            <span class="counter-remaining" id="charsRemaining">5,000 characters remaining</span>
+          </p>
+
+          <div class="playback" role="group" aria-label="Speech controls">
+            <div class="transport">
+              <button type="button" class="btn btn-primary" id="playBtn"><span aria-hidden="true">&#9654;</span> Play</button>
+              <button type="button" class="btn btn-secondary" id="pauseBtn" disabled><span aria-hidden="true">&#9208;</span> Pause</button>
+              <button type="button" class="btn btn-secondary" id="resumeBtn" disabled><span aria-hidden="true">&#9654;</span> Resume</button>
+              <button type="button" class="btn btn-secondary" id="stopBtn" disabled><span aria-hidden="true">&#9209;</span> Stop</button>
+            </div>
+            <div class="status-row">
+              <div class="status" id="speechStatus" data-state="idle" role="status" aria-live="polite">
+                <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+                <span id="statusText">Ready</span>
+              </div>
+              <progress id="speechProgress" class="progress" max="100" value="0" aria-label="Speech progress"></progress>
+            </div>
+            <p class="hint">Tip: press Ctrl+Enter (Cmd+Enter on Mac) inside the text box to start speaking.</p>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="statsTitle">
+          <h2 id="statsTitle">Text statistics</h2>
+          <dl class="stats-grid" id="statsGrid">
+            <div class="stat"><dt>Words</dt><dd id="statWords">0</dd></div>
+            <div class="stat"><dt>Characters</dt><dd id="statChars">0</dd></div>
+            <div class="stat"><dt>Characters (no spaces)</dt><dd id="statCharsNoSpaces">0</dd></div>
+            <div class="stat"><dt>Sentences</dt><dd id="statSentences">0</dd></div>
+            <div class="stat"><dt>Paragraphs</dt><dd id="statParagraphs">0</dd></div>
+            <div class="stat"><dt>Avg. words per sentence</dt><dd id="statAverage">0</dd></div>
+            <div class="stat"><dt>Reading time</dt><dd id="statReading">00:00</dd></div>
+            <div class="stat"><dt>Speech time</dt><dd id="statSpeech">00:00</dd></div>
+          </dl>
+          <p class="hint">Reading time assumes 200 words per minute. Speech time assumes 150 words per minute and follows the speed slider.</p>
+        </section>
+      </div>
+
+      <aside class="workspace-side" aria-label="Voice settings">
+        <section class="card" aria-labelledby="voiceTitle">
+          <h2 id="voiceTitle">Voice and delivery</h2>
+          <p class="alert alert-warning" id="voiceNotice" role="alert" hidden></p>
+
+          <div class="field">
+            <label for="languageSelect">Language</label>
+            <select id="languageSelect"><option value="">Loading voices...</option></select>
+          </div>
+          <div class="field">
+            <label for="voiceSelect">Voice</label>
+            <select id="voiceSelect"><option value="">Loading voices...</option></select>
+          </div>
+
+          <div class="field">
+            <div class="field-row"><label for="rate">Speed</label><output id="rateValue" for="rate">1.0x</output></div>
+            <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+          </div>
+          <div class="field">
+            <div class="field-row"><label for="pitch">Pitch</label><output id="pitchValue" for="pitch">1.0</output></div>
+            <input type="range" id="pitch" min="0" max="2" step="0.1" value="1">
+          </div>
+          <div class="field">
+            <div class="field-row"><label for="volume">Volume</label><output id="volumeValue" for="volume">100%</output></div>
+            <input type="range" id="volume" min="0" max="100" step="5" value="100">
+          </div>
+          <p class="hint">Changes apply from the next sentence while speech is playing.</p>
+
+          <button type="button" class="btn btn-secondary btn-block" id="previewBtn">Preview Voice</button>
+        </section>
+
+        <section class="card" aria-labelledby="downloadTitle">
+          <h2 id="downloadTitle">Audio file</h2>
+          <p>Browser speech synthesis plays audio directly through your speakers. It does not give web pages an audio file to save, so this app cannot honestly offer a download from the browser voices.</p>
+          <button type="button" class="btn btn-secondary btn-block is-unavailable" id="downloadBtn" aria-disabled="true" aria-describedby="downloadHint">Download Audio</button>
+          <p class="hint" id="downloadHint">Unavailable with browser voices. Select the button to learn why.</p>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>Smart Voice Generator is a Text and Speech Analysis subject project. Speech is produced by your browser, so voices differ between devices.</p>
+    </div>
+  </footer>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+  <script src="/js/analysis.js"></script>
+  <script src="/js/speech.js"></script>
+</body>
+</html>

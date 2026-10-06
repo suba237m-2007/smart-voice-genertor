@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%231d6b74%27/%3E%3Cpath d=%27M8 13v6M12.5 9v14M17 12v8M21.5 7v18M26 14v4%27 stroke=%27white%27 stroke-width=%272.2%27 stroke-linecap=%27round%27 fill=%27none%27/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <script src="/js/main.js"></script>
+  <title>About - Smart Voice Generator</title>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="Smart Voice Generator home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect class="mark-bg" width="32" height="32" rx="8"></rect>
+          <path class="mark-bars" d="M8 13v6M12.5 9v14M17 12v8M21.5 7v18M26 14v4"></path>
+        </svg>
+        <span class="brand-name">Smart Voice Generator</span>
+      </a>
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+      <nav id="siteNav" class="site-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a class="nav-link" href="/">Home</a></li>
+          <li><a class="nav-link" href="/history">History</a></li>
+          <li><a class="nav-link" href="/about" aria-current="page">About</a></li>
+          <li><button type="button" class="nav-link nav-button" data-open-settings>Settings</button></li>
+        </ul>
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button type="button" data-theme-set="light" aria-pressed="false">&#9728; Light</button>
+          <button type="button" data-theme-set="dark" aria-pressed="false">&#127769; Dark</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main id="main">
+    <section class="page-head">
+      <div class="container">
+        <h1>About Smart Voice Generator</h1>
+        <p class="page-sub prose">Smart Voice Generator is a web-based Text-to-Speech application developed for Text and Speech Analysis. It converts written text into spoken output while providing text statistics and customizable speech controls.</p>
+      </div>
+    </section>
+
+    <div class="container about-grid">
+      <section class="card prose" aria-labelledby="objTitle">
+        <h2 id="objTitle">Project objective</h2>
+        <p>The project shows how written language can be analyzed and turned into speech inside an ordinary web page. A user enters text, sees measurements such as word count and speaking time, chooses a voice, adjusts how it sounds, and listens to the result. Each request is saved so it can be reused later.</p>
+      </section>
+
+      <section class="card prose" aria-labelledby="featTitle">
+        <h2 id="featTitle">Key features</h2>
+        <ul>
+          <li>Text editor with live character, word and sentence counters and a 5,000 character limit</li>
+          <li>Voice and language selection from the voices installed on your device</li>
+          <li>Speed, pitch and volume controls with play, pause, resume and stop</li>
+          <li>Voice preview with a short sample sentence</li>
+          <li>Speech history stored in SQLite, with reuse and delete actions</li>
+          <li>Light and dark themes, saved settings, and a layout that adapts to phones and tablets</li>
+        </ul>
+      </section>
+
+      <section class="card prose" aria-labelledby="techTitle">
+        <h2 id="techTitle">Technology stack</h2>
+        <ul>
+          <li><strong>Frontend:</strong> HTML5, CSS3 and vanilla JavaScript</li>
+          <li><strong>Speech:</strong> the browser's Web Speech API (SpeechSynthesis)</li>
+          <li><strong>Backend:</strong> Python with Flask, exposing a REST API</li>
+          <li><strong>Database:</strong> SQLite, queried with parameterized statements</li>
+        </ul>
+      </section>
+
+      <section class="card prose" aria-labelledby="analysisTitle">
+        <h2 id="analysisTitle">Text analysis</h2>
+        <p>Statistics are calculated in the browser every time the text changes: characters with and without spaces, words, sentences, paragraphs, average words per sentence, estimated reading time (200 words per minute) and estimated speaking time (150 words per minute, adjusted by the speed setting). Sentences end at a full stop, question mark, exclamation mark, ellipsis or the Devanagari danda, so Hindi text is counted correctly. The server offers the same calculation at <code>POST /api/analyze</code>.</p>
+      </section>
+
+      <section class="card prose" aria-labelledby="speechTitle">
+        <h2 id="speechTitle">Speech synthesis</h2>
+        <p>Speech is generated by the speech engine built into your browser and operating system. The app splits long text into sentences and speaks them in order, which keeps playback reliable in browsers that cut off long utterances. Speed, pitch and volume are read before each sentence, so changes take effect as you move the sliders.</p>
+        <p>Browsers do not let a web page record this output, so audio download is not offered with browser voices. The <code>static/audio/</code> folder is reserved for files created by a server-side speech engine, if one is added later.</p>
+      </section>
+
+      <section class="card prose" aria-labelledby="compatTitle">
+        <h2 id="compatTitle">Browser compatibility</h2>
+        <p>Speech synthesis works in current versions of Chrome, Edge, Safari and Firefox. The list of languages and voices depends on the browser and the operating system, so a Tamil, Hindi, Telugu, Malayalam or Kannada voice appears only if your device provides one. Some browsers load voices a moment after the page opens, and some mobile browsers do not support pausing. If no voices are found, the app tells you instead of failing silently.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>Smart Voice Generator is a Text and Speech Analysis subject project. Speech is produced by your browser, so voices differ between devices.</p>
+    </div>
+  </footer>
+  <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+</body>
+</html>
